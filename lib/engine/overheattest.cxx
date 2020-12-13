@@ -19,7 +19,7 @@ void OverheatTest::start()
 
 bool OverheatTest::stop()
 {
-    return false;
+    return engine()->isOverheat();
 }
 
 void OverheatTest::step()
