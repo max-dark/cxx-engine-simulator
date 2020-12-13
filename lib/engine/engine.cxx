@@ -26,7 +26,7 @@ double Engine::currentT() const noexcept
 
 bool Engine::isOverheat() const noexcept
 {
-    return currentT() >= overheatTemp();
+    return currentT() > overheatTemp() || (0.0001 > std::abs(currentT() - overheatTemp()));
 }
 
 void Engine::setOverheatTemp(double value) noexcept
