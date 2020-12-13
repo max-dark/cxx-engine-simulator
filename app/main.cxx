@@ -15,13 +15,16 @@ void setUp(IC_Engine& engine)
     engine.setHv(0.0001);
     engine.setC(0.1);
 
-    engine.addPoint(0, 20);
-    engine.addPoint(75, 75);
-    engine.addPoint(150, 100);
-    engine.addPoint(200, 105);
-    engine.addPoint(250, 75);
-    engine.addPoint(300, 0);
-    engine.sortPoints();
+    PiecewiseLinearFunction plf{};
+    plf.addPoint(0, 20);
+    plf.addPoint(75, 75);
+    plf.addPoint(150, 100);
+    plf.addPoint(200, 105);
+    plf.addPoint(250, 75);
+    plf.addPoint(300, 0);
+    plf.sortPoints();
+
+    engine.setPoints(std::move(plf));
 }
 
 int main(int argc, char** argv)

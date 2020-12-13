@@ -4,8 +4,8 @@
 
 #include <engine/icengine.hxx>
 
-#include <utility>
 #include <algorithm>
+#include <utility>
 
 void IC_Engine::start()
 {
@@ -66,71 +66,9 @@ void IC_Engine::setTargetV(double value) noexcept
     targetV = value;
 }
 
-void IC_Engine::addPoint(double rotV, double rotM)
-{
-    plfData.emplace_back(rotV, rotM);
-}
-
-void IC_Engine::setPoints(MomentFunction data)
-{
-    plfData = std::move(data);
-}
-
-void IC_Engine::clearPoints()
-{
-    plfData = {};
-}
-
 double IC_Engine::getMomentByRotation(double rotV) const
 {
-    auto first = plfData.front();
-    auto last = plfData.back();
-
-    // out of range
-    if (rotV <= first.first)
-    {
-        return first.second;
-    }
-
-    // out of range
-    if (rotV >= last.first)
-    {
-        return last.second;
-    }
-
-    // here rotV in range(first..last)
-
-    // find right bound of rotV
-    auto right = std::lower_bound(std::begin(plfData), std::end(plfData), rotV,
-                                  [](const MomentPair& a, double value)
-    {
-        return a.first <= value;
-    });
-
-    // approximate rotM by PLF range [left..right]
-
-    auto left = right - 1;
-
-    auto [lowV, lowM] = *left;
-    auto [higV, higM] = *right;
-
-    auto dV = higV - lowV;
-    auto dM = higM - lowM;
-
-    auto dX = rotV - lowV;
-    auto kX = dX / dV;
-    auto dY = dM * kX;
-
-    return lowM + dY;
-}
-
-void IC_Engine::sortPoints()
-{
-    std::sort(std::begin(plfData), std::end(plfData),
-              [](const MomentPair& a, const MomentPair& b)
-    {
-        return a.first < b.first;
-    });
+    return plf.calculate(rotV);
 }
 
 double IC_Engine::rotationAccel() const
@@ -170,9 +108,14 @@ double IC_Engine::newTemp(double dt) const
 
 double IC_Engine::newV(double dt) const
 {
-    auto maxV = plfData.back().first;
+    auto maxV = plf.last().first;
     auto nV = currentV() + dV(dt);
     return std::min(maxV, nV);
+}
+
+void IC_Engine::setPoints(PiecewiseLinearFunction data)
+{
+    plf = std::move(data);
 }
 
 IC_Engine::~IC_Engine() = default;

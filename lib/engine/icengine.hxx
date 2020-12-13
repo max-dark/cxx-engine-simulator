@@ -7,14 +7,7 @@
 
 #include <engine/engine.hxx>
 
-#include <vector>
-
-/// \brief rotation/moment pair
-/// first - rotation speed
-/// second - moment
-using MomentPair = std::pair<double, double>;
-/// \brief rotation/moment data for pairwise linear function
-using MomentFunction = std::vector<MomentPair>;
+#include <utility/piecewiselinearfunction.hxx>
 
 /**
  * \brief "internal combustion" engine
@@ -32,13 +25,7 @@ public:
 
     ~IC_Engine() override;
 
-    void addPoint(double rotV, double rotM);
-
-    void setPoints(MomentFunction data);
-
-    void sortPoints();
-
-    void clearPoints();
+    void setPoints(PiecewiseLinearFunction data);
 
     void setInertia(double value) noexcept;
 
@@ -82,7 +69,7 @@ private:
 
     double newV(double dt) const;
 
-    MomentFunction plfData{};
+    PiecewiseLinearFunction plf;
 };
 
 
