@@ -7,10 +7,12 @@ target_sources(engine
         engine/engine.hxx
         engine/icengine.hxx
         engine/enginetest.hxx
+        engine/overheattest.hxx
     PRIVATE
         engine/engine.cxx
         engine/icengine.cxx
         engine/enginetest.cxx
+        engine/overheattest.cxx
 )
 target_include_directories(engine
     PUBLIC
