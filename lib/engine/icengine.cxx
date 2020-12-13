@@ -8,22 +8,29 @@
 
 void IC_Engine::start()
 {
-
+    V = 0;
+    M = getMomentByRotation(currentV());
 }
 
 void IC_Engine::step(double dt)
 {
+    auto nV = newV(dt);
+    auto nM = getMomentByRotation(nV);
+    auto nT = newTemp(dt);
 
+    V = nV; M = nM; T = nT;
 }
 
 void IC_Engine::stop()
 {
-
+    setTargetV(0);
 }
 
 void IC_Engine::reset()
 {
-
+    V = 0;
+    M = 0;
+    T = envT;
 }
 
 double IC_Engine::currentV() const noexcept
@@ -190,7 +197,7 @@ double IC_Engine::dCool(double dt) const
 
 double IC_Engine::newTemp(double dt) const
 {
-    return dHeat(dt) + dCool(dt);
+    return currentT() + dHeat(dt) + dCool(dt);
 }
 
 double IC_Engine::newV(double dt) const
