@@ -27,10 +27,36 @@ void setUp(IC_Engine& engine)
     engine.setPoints(std::move(plf));
 }
 
+struct ConsoleCallback
+{
+    void on_start(const Engine* e)
+    {
+        std::cout << "Test started" << std::endl;
+        steps = 0;
+    }
+    void on_step(const Engine* e)
+    {
+        ++steps;
+        if (steps % 10 == 0)
+        {
+            std::cout << "T = " << e->currentT() << std::endl;
+            std::cout << "M = " << e->currentM() << std::endl;
+            std::cout << "V = " << e->currentV() << std::endl;
+        }
+    }
+    void on_stop(const Engine* e)
+    {
+        std::cout << "Test stop: " << steps << " simulation steps" << std::endl;
+    }
+private:
+    int steps = 0;
+};
+
 int main(int argc, char** argv)
 {
     auto test = OverheatTest{};
     auto engine = IC_Engine{};
+    auto console = ConsoleCallback{};
 
     setUp(engine);
 
@@ -39,6 +65,13 @@ int main(int argc, char** argv)
     test.setEngine(&engine);
     test.setTimeStep(1);
 
+    // set test callbacks
+    {
+        using namespace std::placeholders;
+        test.setStartCallback(std::bind(&ConsoleCallback::on_start, &console, _1));
+        test.setStepCallback(std::bind(&ConsoleCallback::on_step, &console, _1));
+        test.setStopCallback(std::bind(&ConsoleCallback::on_stop, &console, _1));
+    }
     test.run();
 
     std::cout << "time: " << test.runTime();
