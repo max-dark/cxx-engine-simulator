@@ -1,0 +1,15 @@
+# M$
+.vs/
+.vscode/
+
+# JetBrains
+.idea/
+
+
+# QtCreator
+CMakeLists.txt.user
+CMakeLists.txt.user.*
+
+# binary
+*build*
+
