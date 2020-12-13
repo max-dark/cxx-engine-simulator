@@ -15,7 +15,8 @@ public:
     virtual void start() = 0;
 
     /// \brief simulation step
-    virtual void step() = 0;
+    /// \param dt simulation time step
+    virtual void step(double dt) = 0;
 
     /// \brief stop engine
     virtual void stop() = 0;
