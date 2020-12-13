@@ -7,3 +7,7 @@ target_sources(simulator
         main.cxx
 )
 
+target_link_libraries(simulator
+    PRIVATE
+        engine
+)
