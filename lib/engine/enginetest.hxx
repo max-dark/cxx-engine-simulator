@@ -19,6 +19,13 @@ public:
     /// \brief current engine
     [[nodiscard]] Engine* engine() const noexcept;
 
+    /// \brief run test
+    void run();
+
+    /// \brief destructor
+    virtual ~EngineTest();
+
+protected:
     /// \brief test init
     /// do nothing by default
     virtual void beforeStart();
@@ -35,12 +42,6 @@ public:
     /// \brief test stop
     /// do nothing by default
     virtual void afterStop();
-
-    /// \brief run test
-    void run();
-
-    /// \brief destructor
-    virtual ~EngineTest();
 
 private:
     Engine* motor = nullptr;
