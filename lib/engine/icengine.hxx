@@ -45,49 +45,25 @@ public:
 
     double Inertia() const noexcept;
 
-    void setOverheatTemp(double value) noexcept;
-
-    double overheatTemp() const noexcept;
-
     void setHm(double value) noexcept;
 
     void setHv(double value) noexcept;
 
     void setC(double value) noexcept;
 
-    void setEnvT(double value) noexcept;
-
     void setTargetV(double value) noexcept;
 
-    /// current rotation speed
-    double currentV() const noexcept;
-
-    /// current moment
-    double currentM() const noexcept;
-
-    /// current temp
-    double currentT() const noexcept;
-
-    /// overheat test
-    bool isOverheat() const noexcept;
 private:
     /// moment of inertia
-    double inertia;
-    /// overheat temp
-    double overheatT;
+    double inertia = 0;
     /// heating dependency of M
-    double Hm;
+    double Hm = 0;
     /// heating dependency of V
-    double Hv;
+    double Hv = 0;
     /// cooling dependency of environ T
-    double C;
-    /// environ T
-    double envT;
+    double C = 0;
 
-    double targetV; // target rotation speed
-    double V; // current rotation speed
-    double M; // current Moment
-    double T; // current temp
+    double targetV = 0; // target rotation speed
 
     double getMomentByRotation(double rotV) const;
 
@@ -107,7 +83,7 @@ private:
 
     double newV(double dt) const;
 
-    MomentFunction plfData;
+    MomentFunction plfData{};
 };
 
 

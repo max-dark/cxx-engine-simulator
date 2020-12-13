@@ -3,13 +3,14 @@
 //
 
 #include "icengine.hxx"
+#include "engine.hxx"
 
 #include <algorithm>
 
 void IC_Engine::start()
 {
-    V = 0;
-    M = getMomentByRotation(currentV());
+    setV(0);
+    setM(getMomentByRotation(currentV()));
 }
 
 void IC_Engine::step(double dt)
@@ -18,7 +19,9 @@ void IC_Engine::step(double dt)
     auto nM = getMomentByRotation(nV);
     auto nT = newTemp(dt);
 
-    V = nV; M = nM; T = nT;
+    setV(nV);
+    setM(nM);
+    setT(nT);
 }
 
 void IC_Engine::stop()
@@ -28,29 +31,9 @@ void IC_Engine::stop()
 
 void IC_Engine::reset()
 {
-    V = 0;
-    M = 0;
-    T = envT;
-}
-
-double IC_Engine::currentV() const noexcept
-{
-    return V;
-}
-
-double IC_Engine::currentM() const noexcept
-{
-    return M;
-}
-
-double IC_Engine::currentT() const noexcept
-{
-    return T;
-}
-
-bool IC_Engine::isOverheat() const noexcept
-{
-    return currentT() >= overheatTemp();
+    setV(0);
+    setM(0);
+    setT(environT());
 }
 
 void IC_Engine::setInertia(double value) noexcept
@@ -61,16 +44,6 @@ void IC_Engine::setInertia(double value) noexcept
 double IC_Engine::Inertia() const noexcept
 {
     return inertia;
-}
-
-void IC_Engine::setOverheatTemp(double value) noexcept
-{
-    overheatT = value;
-}
-
-double IC_Engine::overheatTemp() const noexcept
-{
-    return overheatT;
 }
 
 void IC_Engine::setHm(double value) noexcept
@@ -86,11 +59,6 @@ void IC_Engine::setHv(double value) noexcept
 void IC_Engine::setC(double value) noexcept
 {
     C = value;
-}
-
-void IC_Engine::setEnvT(double value) noexcept
-{
-    envT = value;
 }
 
 void IC_Engine::setTargetV(double value) noexcept
@@ -177,7 +145,7 @@ double IC_Engine::heatingV() const
 
 double IC_Engine::coolingV() const
 {
-    return C * (envT - currentT());
+    return C * (environT() - currentT());
 }
 
 double IC_Engine::dV(double dt) const

@@ -26,6 +26,44 @@ public:
 
     /// \brief Destructor
     virtual ~Engine();
+
+    /// current rotation speed
+    double currentV() const noexcept;
+
+    /// current moment
+    double currentM() const noexcept;
+
+    /// current temp
+    double currentT() const noexcept;
+
+    /// overheat test
+    bool isOverheat() const noexcept;
+
+    void setOverheatTemp(double value) noexcept;
+
+    double overheatTemp() const noexcept;
+
+    void setEnvT(double value) noexcept;
+
+    double environT() const noexcept;
+
+protected:
+    void setM(double value) noexcept;
+    void setV(double value) noexcept;
+    void setT(double value) noexcept;
+
+private:
+    /// overheat temp
+    double overheatT = 0;
+    /// environ T
+    double envT = 0;
+
+    /// current rotation speed
+    double V = 0;
+    /// current rotation moment
+    double M = 0;
+    /// current engine temp
+    double T = 0;
 };
 
 
