@@ -5,8 +5,10 @@ add_library(engine STATIC)
 target_sources(engine
     PUBLIC
         engine/engine.hxx
+        engine/enginetest.hxx
     PRIVATE
         engine/engine.cxx
+        engine/enginetest.cxx
 )
 target_include_directories(engine
     PUBLIC
