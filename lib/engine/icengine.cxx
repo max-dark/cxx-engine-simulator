@@ -158,4 +158,46 @@ void IC_Engine::sortPoints()
     });
 }
 
+double IC_Engine::rotationAccel() const
+{
+    return currentM() / Inertia();
+}
+
+double IC_Engine::heatingV() const
+{
+    return currentM() * Hm + currentV() * currentV() * Hv;
+}
+
+double IC_Engine::coolingV() const
+{
+    return C * (envT - currentT());
+}
+
+double IC_Engine::dV(double dt) const
+{
+    return dt * rotationAccel();
+}
+
+double IC_Engine::dHeat(double dt) const
+{
+    return dt * heatingV();
+}
+
+double IC_Engine::dCool(double dt) const
+{
+    return dt * coolingV();
+}
+
+double IC_Engine::newTemp(double dt) const
+{
+    return dHeat(dt) + dCool(dt);
+}
+
+double IC_Engine::newV(double dt) const
+{
+    auto maxV = plfData.back().first;
+    auto nV = currentV() + dV(dt);
+    return std::min(maxV, nV);
+}
+
 IC_Engine::~IC_Engine() = default;

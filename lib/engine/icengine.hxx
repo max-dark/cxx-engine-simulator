@@ -91,6 +91,22 @@ private:
 
     double getMomentByRotation(double rotV) const;
 
+    double rotationAccel() const;
+
+    double dV(double dt) const;
+
+    double heatingV() const;
+
+    double dHeat(double dt) const;
+
+    double coolingV() const;
+
+    double dCool(double dt) const;
+
+    double newTemp(double dt) const;
+
+    double newV(double dt) const;
+
     MomentFunction plfData;
 };
 
