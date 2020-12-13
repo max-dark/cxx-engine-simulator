@@ -33,6 +33,14 @@ public:
 
     ~IC_Engine() override;
 
+    void addPoint(double rotV, double rotM);
+
+    void setPoints(MomentFunction data);
+
+    void sortPoints();
+
+    void clearPoints();
+
     void setInertia(double value) noexcept;
 
     double Inertia() const noexcept;
@@ -80,6 +88,8 @@ private:
     double V; // current rotation speed
     double M; // current Moment
     double T; // current temp
+
+    double getMomentByRotation(double rotV) const;
 
     MomentFunction plfData;
 };
