@@ -7,6 +7,7 @@
 
 
 #include <vector>
+#include <utility>
 
 /// \brief X/Y pair
 /// first - X
@@ -24,7 +25,11 @@ public:
     void clear();
     void sortPoints();
 
-    double calculate(double X) const;
+    [[nodiscard]] const XYPair &first() const;
+    [[nodiscard]] const XYPair &last() const;
+
+
+    [[nodiscard]] double calculate(double X) const;
 private:
     XYData data;
 };

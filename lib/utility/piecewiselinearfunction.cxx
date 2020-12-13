@@ -72,3 +72,13 @@ double PiecewiseLinearFunction::calculate(double X) const
 
     return leftY + Ydelta;
 }
+
+const XYPair &PiecewiseLinearFunction::first() const
+{
+    return data.front();
+}
+
+const XYPair &PiecewiseLinearFunction::last() const
+{
+    return data.back();
+}
