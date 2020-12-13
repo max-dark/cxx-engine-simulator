@@ -8,7 +8,6 @@
 #include <engine/engine.hxx>
 
 #include <vector>
-#include <utility>
 
 /// \brief rotation/moment pair
 /// first - rotation speed
