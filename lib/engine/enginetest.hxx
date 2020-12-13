@@ -7,6 +7,10 @@
 
 #include <engine/engine.hxx>
 
+#include <functional>
+
+using TestCallback = std::function<void(const Engine*)>;
+
 /**
  * \brief Engine Test Interface
  */
@@ -25,9 +29,12 @@ public:
     /// \brief destructor
     virtual ~EngineTest();
 
+    void setStartCallback(TestCallback callback);
+    void setStepCallback(TestCallback callback);
+    void setStopCallback(TestCallback callback);
+
 protected:
     /// \brief test init
-    /// do nothing by default
     virtual void beforeStart();
 
     /// \brief start test
@@ -40,11 +47,12 @@ protected:
     virtual void step() = 0;
 
     /// \brief test stop
-    /// do nothing by default
     virtual void afterStop();
 
 private:
     Engine* motor = nullptr;
+
+    TestCallback on_start, on_step, on_stop;
 };
 
 

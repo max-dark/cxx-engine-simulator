@@ -10,6 +10,7 @@ void OverheatTest::beforeStart()
 {
     engine()->reset();
     run_time = 0.0;
+    EngineTest::beforeStart();
 }
 
 void OverheatTest::start()
@@ -31,6 +32,7 @@ void OverheatTest::step()
 void OverheatTest::afterStop()
 {
     engine()->stop();
+    EngineTest::afterStop();
 }
 
 void OverheatTest::setTimeStep(double timeStep) noexcept
