@@ -1,0 +1,15 @@
+//
+// Created by max on 13.12.2020.
+//
+
+#ifndef ENGINESIMULATOR_LIB_ENGINE_ENGINE_HXX
+#define ENGINESIMULATOR_LIB_ENGINE_ENGINE_HXX
+
+
+class Engine
+{
+
+};
+
+
+#endif //ENGINESIMULATOR_LIB_ENGINE_ENGINE_HXX
